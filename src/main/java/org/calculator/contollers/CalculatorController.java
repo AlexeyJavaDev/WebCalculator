@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CalculatorController {
 
     @GetMapping("/calculate")
-    public String calculate(@RequestParam("a") int a, @RequestParam("b") int b, @RequestParam("action") String action, Model model) {
-        double result = 0;
+    public String calculate(@RequestParam(value="a", required = false) Integer a, @RequestParam(value="b", required = false) Integer b,
+                            @RequestParam(value="action", required = false) String action, Model model) {
+        if(a == null || b == null || action == null)
+            return "instruction";
+
+        double result;
         switch (action) {
             case ("multiplication") -> {
                 result = a * b;
@@ -30,9 +34,9 @@ public class CalculatorController {
                 result = (double) a / b;
                 action = " / ";
             }
+            default -> result = 0;
         }
         model.addAttribute("resultMessage", a + action + b + " = " + result);
-        System.out.println(result);
         return "result";
     }
 
