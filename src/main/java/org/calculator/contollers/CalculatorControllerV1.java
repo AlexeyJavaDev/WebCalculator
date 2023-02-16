@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/v1/")
-public class CalculatorController {
+public class CalculatorControllerV1 {
 
     @GetMapping("/calculate")
     public String calculate(@RequestParam(value="a", required = false) Integer a, @RequestParam(value="b", required = false) Integer b,
                             @RequestParam(value="action", required = false) String action, Model model) {
         if(a == null || b == null || action == null)
-            return "instruction";
+            return "instruction-v1";
 
         double result;
         switch (action) {
@@ -37,7 +37,7 @@ public class CalculatorController {
             default -> result = 0;
         }
         model.addAttribute("resultMessage", a + action + b + " = " + result);
-        return "result";
+        return "result-v1";
     }
 
 }
